@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title> Text Sort </title>
+    <style>
+      p {
+        font-family: arial;
+        font-size: 150px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <p> </p>
+    <script>
+      const sleep = ms => new Promise(r => setTimeout(r, ms));
+    
+      const textArray = ['S', 'A', 'M', 'P', 'L', 'E', '<br>', 'T', 'E', 'X', 'T'];
+      const numArray = [];
+      
+      for (let i = 0; i < textArray.length; i++) {
+        numArray[i] = i;
+      }
+      
+      // Scrambles textArray so it can be sorted
+      for (let i = 0; i < textArray.length; i++) {
+        const switchNum = Math.floor(Math.random() * textArray.length);
+        
+        let temp = textArray[i];
+        textArray[i] = textArray[switchNum];
+        textArray[switchNum] = temp;
+        
+        temp = numArray[i];
+        numArray[i] = numArray[switchNum];
+        numArray[switchNum] = temp;
+      }
+      
+      let str = "";
+      for (c of textArray) {
+        str += c;
+      }
+      
+      document.querySelector('p').innerHTML = str;
+      
+      (async () => {
+        for (let i = 0; i < textArray.length - 1; i++) {
+          for (let j = 0; j < textArray.length - 1 - i; j++) {
+            if (numArray[j + 1] < numArray[j]) {
+              let temp = textArray[j];
+              textArray[j] = textArray[j + 1];
+              textArray[j + 1] = temp;
+              
+              temp = numArray[j];
+              numArray[j] = numArray[j + 1];
+              numArray[j + 1] = temp;
+              
+              let str = "";
+              for (c of textArray) {
+                str += c;
+              }
+              document.querySelector('p').innerHTML = str;
+              await sleep(1000);
+            }
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
